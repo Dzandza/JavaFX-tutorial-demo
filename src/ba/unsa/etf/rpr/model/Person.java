@@ -2,9 +2,11 @@ package ba.unsa.etf.rpr.model;
 
 import javafx.beans.property.SimpleStringProperty;
 
+import java.io.Serializable;
+
 
 //Klasa osoba koja prati javafx beans konvenciju
-public class Person {
+public class Person implements Serializable {
 
     //atributi u obliku propertija
     private SimpleStringProperty firstName = new SimpleStringProperty("");

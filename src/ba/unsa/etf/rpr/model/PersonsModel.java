@@ -4,6 +4,13 @@ import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 //Model klasa koju povezujemo sa kontrolerom
@@ -34,11 +41,16 @@ public class PersonsModel {
 
 
     //TODO: Metode za export i import xml datoteka
-    public void saveToXML(){
-
+    public void saveToXML(File file) throws FileNotFoundException {
+        XMLEncoder xmlEncoder = new XMLEncoder(new FileOutputStream(file));
+        xmlEncoder.writeObject(new ArrayList<>(persons));
+        xmlEncoder.close();
     }
 
-    public void loadFromXML(){
-
+    public void loadFromXML(File file) throws FileNotFoundException {
+        XMLDecoder xmlDecoder = new XMLDecoder(new FileInputStream(file));
+        persons.removeAll();
+        persons.addAll((ArrayList<Person>) xmlDecoder.readObject());
+        xmlDecoder.close();
     }
 }

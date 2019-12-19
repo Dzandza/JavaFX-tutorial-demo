@@ -4,9 +4,22 @@ import ba.unsa.etf.rpr.model.Person;
 import ba.unsa.etf.rpr.model.PersonsModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class HomeController {
     //privatni atributi za logicke potrebe kontrolera
@@ -107,12 +120,12 @@ public class HomeController {
                     || personTableView.getSelectionModel().getSelectedItem() != null)
             ) disableViews(true);
 
-            //Ukoliko je ovo polje validno potrebno je provjeriti da li je i dalje nesto selektovano, te da li je forma validna
-            //Ukoliko jeste tada ce se disable pogleda na podatke ugasiti, te ce se moci ponovo selektovati i manpulisati sa istim
+                //Ukoliko je ovo polje validno potrebno je provjeriti da li je i dalje nesto selektovano, te da li je forma validna
+                //Ukoliko jeste tada ce se disable pogleda na podatke ugasiti, te ce se moci ponovo selektovati i manpulisati sa istim
             else if (personListView.getSelectionModel().getSelectedItem() != null || personTableView.getSelectionModel().getSelectedItem() != null)
                 disableViews(!isFormValid());
 
-            //Ukoliko nije nista od prethodnog zadovoljeno podaci se mogu selektovati slodno jer je sve validno
+                //Ukoliko nije nista od prethodnog zadovoljeno podaci se mogu selektovati slodno jer je sve validno
             else disableViews(false);
 
             //Reset error poruke na prvi input u polja
@@ -248,6 +261,27 @@ public class HomeController {
         });
     }
 
+    //Pomocna metoda za prikazivanje prozora koji signalizira gresku
+    private void showErrorStage(String message) throws IOException {
+
+        //Ucitavanje prozora sa porukom kao u mainu
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/error.fxml"));
+        loader.setController(new ErrorController(message));
+        loader.load();
+
+        //Kreiranje novog prozora i postavljanje vrijednosti
+        Stage errorStage = new Stage();
+        errorStage.setTitle("Greška");
+        errorStage.setResizable(false);
+        errorStage.setScene(new Scene(loader.getRoot(), 400, 100));
+
+        //Ovim zabranjujemo da se rade bilo kakve operacije dok je otvoren prozor za gresku
+        errorStage.initModality(Modality.APPLICATION_MODAL);
+
+        //Otvaranje prozora
+        errorStage.show();
+    }
+
     //Konstruktor koji prima model
     public HomeController(PersonsModel personsModel) {
         this.personsModel = personsModel;
@@ -295,5 +329,39 @@ public class HomeController {
             } else errorText.setText(BLANK_FIELD_ERROR_MESSAGE);
 
         } else errorText.setText(NO_SELECTION_ERROR_MESSAGE);
+    }
+
+    public void openFile(ActionEvent actionEvent) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Otvori datoteku");
+
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml"));
+
+        File file = fileChooser.showOpenDialog(addButton.getScene().getWindow());
+
+        if (file != null) {
+            try {
+                personsModel.loadFromXML(file);
+            } catch (FileNotFoundException e) {
+                showErrorStage("Fajl ne postoji");
+            }
+        }
+    }
+
+    public void saveFile(ActionEvent actionEvent) throws IOException {
+        if (personListView.getSelectionModel().getSelectedItem() == null && personTableView.getSelectionModel().getSelectedItem() == null) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Spasi u datoteku datoteku");
+            fileChooser.setInitialFileName("file-" + LocalDateTime.now() + ".xml");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml"));
+
+            File file = fileChooser.showSaveDialog(addButton.getScene().getWindow());
+
+            if (file != null) personsModel.saveToXML(file);
+        } else showErrorStage("Završite editovanje kako biste mogli spasiti fajl");
+    }
+
+    public void exitApp(ActionEvent actionEvent) {
+        ((Stage) addButton.getScene().getWindow()).close();
     }
 }

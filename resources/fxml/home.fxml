@@ -12,6 +12,10 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <GridPane xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
     <columnConstraints>
         <ColumnConstraints percentWidth="5"/>
@@ -28,7 +32,25 @@
     </rowConstraints>
 
     <children>
-
+        <MenuBar GridPane.columnSpan="4">
+            <Menu text="File" >
+                <MenuItem text="Otvori" onAction="#openFile">
+                    <accelerator>
+                        <KeyCodeCombination control="DOWN" code="O" meta="UP" alt="UP" shift="UP" shortcut="UP"/>
+                    </accelerator>
+                </MenuItem>
+                <MenuItem text="Spasi" onAction="#saveFile">
+                    <accelerator>
+                        <KeyCodeCombination control="DOWN" code="S" meta="UP" alt="UP" shift="UP" shortcut="UP"/>
+                    </accelerator>
+                </MenuItem>
+                <MenuItem text="Izlaz" onAction="#exitApp">
+                    <accelerator>
+                        <KeyCodeCombination control="DOWN" code="X" meta="UP" alt="UP" shift="UP" shortcut="UP"/>
+                    </accelerator>
+                </MenuItem>
+            </Menu>
+        </MenuBar>
         <ListView fx:id="personListView" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
         <TableView fx:id="personTableView" GridPane.rowIndex="1" GridPane.columnIndex="1" visible="false">
             <columns>
