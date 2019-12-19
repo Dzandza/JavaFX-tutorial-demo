@@ -1,0 +1,107 @@
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.layout.HBox?>
+
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.text.Text?>
+<GridPane xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+    <columnConstraints>
+        <ColumnConstraints percentWidth="5"/>
+        <ColumnConstraints percentWidth="45"/>
+        <ColumnConstraints percentWidth="45"/>
+        <ColumnConstraints percentWidth="5"/>
+    </columnConstraints>
+
+    <rowConstraints>
+        <RowConstraints percentHeight="5"/>
+        <RowConstraints percentHeight="80"/>
+        <RowConstraints percentHeight="10"/>
+        <RowConstraints percentHeight="5"/>
+    </rowConstraints>
+
+    <children>
+
+        <ListView fx:id="personListView" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        <TableView fx:id="personTableView" GridPane.rowIndex="1" GridPane.columnIndex="1" visible="false">
+            <columns>
+                <TableColumn editable="false" sortable="false" prefWidth="85" text="Ime" fx:id="firstNameColumn"
+                             maxWidth="Infinity"/>
+                <TableColumn editable="false" sortable="false" prefWidth="85" text="Prezime" fx:id="lastNameColumn"
+                             maxWidth="Infinity"/>
+                <TableColumn editable="false" sortable="false" prefWidth="85" text="Email" fx:id="emailColumn"
+                             maxWidth="Infinity"/>
+                <TableColumn editable="false" sortable="false" prefWidth="85" text="Username" fx:id="usernameColumn"
+                             maxWidth="Infinity"/>
+            </columns>
+        </TableView>
+
+        <HBox GridPane.rowIndex="2" GridPane.columnIndex="1" alignment="CENTER" spacing="10">
+            <Label>Prikaz u tabeli</Label>
+            <CheckBox fx:id="toggleViewCheckBox"/>
+        </HBox>
+
+
+        <GridPane GridPane.rowIndex="1" GridPane.columnIndex="2" alignment="CENTER" vgap="10" hgap="5">
+            <columnConstraints>
+                <ColumnConstraints/>
+                <ColumnConstraints/>
+            </columnConstraints>
+
+            <rowConstraints>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+            </rowConstraints>
+
+            <children>
+                <Label GridPane.rowIndex="0" GridPane.columnIndex="0">Ime:</Label>
+                <Label GridPane.rowIndex="1" GridPane.columnIndex="0">Prezime:</Label>
+                <Label GridPane.rowIndex="2" GridPane.columnIndex="0">Email:</Label>
+                <Label GridPane.rowIndex="3" GridPane.columnIndex="0">Korisničko ime:</Label>
+                <Label GridPane.rowIndex="4" GridPane.columnIndex="0">Password:</Label>
+
+                <TextField fx:id="firstNameTextField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <TextField fx:id="lastNameTextField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <TextField fx:id="emailTextField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <TextField fx:id="usernameTextField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                <PasswordField fx:id="passwordPasswordField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                <Text fx:id="errorText" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.columnIndex="0"
+                      GridPane.columnSpan="2" text=""/>
+            </children>
+        </GridPane>
+
+        <GridPane GridPane.rowIndex="2" GridPane.columnIndex="2" hgap="10">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="50"/>
+                <ColumnConstraints percentWidth="50"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints percentHeight="100"/>
+            </rowConstraints>
+            <children>
+                <Button onAction="#deselectPerson" maxWidth="Infinity" alignment="CENTER" GridPane.rowIndex="0"
+                        GridPane.columnIndex="0">Deselektuj
+                </Button>
+
+                <Button onAction="#addPerson" maxWidth="Infinity" alignment="CENTER" fx:id="addButton"
+                        GridPane.rowIndex="0" GridPane.columnIndex="1">Dodaj
+                </Button>
+            </children>
+        </GridPane>
+
+
+    </children>
+
+
+</GridPane>
