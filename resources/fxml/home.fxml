@@ -34,6 +34,7 @@
     <children>
         <MenuBar GridPane.columnSpan="4">
             <Menu text="File" >
+                <MenuItem text="Novi" onAction="#newFile" />
                 <MenuItem text="Otvori" onAction="#openFile">
                     <accelerator>
                         <KeyCodeCombination control="DOWN" code="O" meta="UP" alt="UP" shift="UP" shortcut="UP"/>

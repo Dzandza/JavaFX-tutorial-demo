@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="11.0.4" class="java.beans.XMLDecoder">
+ <object class="java.util.ArrayList">
+  <void method="add">
+   <object class="ba.unsa.etf.rpr.model.Person">
+    <void property="email">
+     <string>email1</string>
+    </void>
+    <void property="firstName">
+     <string>ime1</string>
+    </void>
+    <void property="lastName">
+     <string>prezime1</string>
+    </void>
+    <void property="password">
+     <string>password1</string>
+    </void>
+    <void property="username">
+     <string>username1</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="ba.unsa.etf.rpr.model.Person">
+    <void property="email">
+     <string>email2</string>
+    </void>
+    <void property="firstName">
+     <string>ime2</string>
+    </void>
+    <void property="lastName">
+     <string>prezime2</string>
+    </void>
+    <void property="password">
+     <string>password2</string>
+    </void>
+    <void property="username">
+     <string>username2</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="ba.unsa.etf.rpr.model.Person">
+    <void property="email">
+     <string>email3</string>
+    </void>
+    <void property="firstName">
+     <string>ime3</string>
+    </void>
+    <void property="lastName">
+     <string>prezime3</string>
+    </void>
+    <void property="password">
+     <string>password3</string>
+    </void>
+    <void property="username">
+     <string>username3</string>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>

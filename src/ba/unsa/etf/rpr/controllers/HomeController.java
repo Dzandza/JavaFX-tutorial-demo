@@ -14,7 +14,9 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -331,36 +333,65 @@ public class HomeController {
         } else errorText.setText(NO_SELECTION_ERROR_MESSAGE);
     }
 
-    public void openFile(ActionEvent actionEvent) throws IOException {
+    //pravljenje novog radnog prostora
+    public void newFile(ActionEvent actionEvent) {
+        personTableView.getSelectionModel().clearSelection();
+        personListView.getSelectionModel().clearSelection();
+        personsModel.resetList();
+        setEmptyTextFields();
+    }
+
+
+    //metoda za otvaranje fajlova
+    public void openFile(ActionEvent actionEvent) throws IOException, ParserConfigurationException {
+        //filechooser se koristi za otvaranje novog prozora za odabir datoteke
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Otvori datoteku");
 
+        //filtriranje ekstenzija, da mozemo samo odabrati adekvatnu vrstu fajlova
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml"));
 
+        //otvaranje dijaloga
         File file = fileChooser.showOpenDialog(addButton.getScene().getWindow());
 
+        //provjera da li je selektovan fajl
         if (file != null) {
             try {
-                personsModel.loadFromXML(file);
+                //poziv metode modela
+                personsModel.loadFromXML(file, true); // drugi parametar metode se moze proizvoljno mijenjati, efekat ce biti isti
             } catch (FileNotFoundException e) {
-                showErrorStage("Fajl ne postoji");
+                showErrorStage("Fajl ne postoji"); //ukoliko se desi greska pri citanju
+            } catch (SAXException e) {
+                showErrorStage("Fajl nije validan xml dokument");  //ukoliko se desi greska pri parsiranju
             }
         }
     }
 
+    //metoda za spasavanje podataka u xml datoteku
     public void saveFile(ActionEvent actionEvent) throws IOException {
+
+        //ukoliko je u toku editovanje mora se zavrsiti radi validnosti podataka da bi se spasio fajl
         if (personListView.getSelectionModel().getSelectedItem() == null && personTableView.getSelectionModel().getSelectedItem() == null) {
+
+           //analogno se koristi filechooser
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Spasi u datoteku datoteku");
+
+            //prijedlog naziva fajla
             fileChooser.setInitialFileName("file-" + LocalDateTime.now() + ".xml");
+
+            //dozvoljene ekstenzije
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml"));
 
+            //otvaranje dijaloga za biranje lokacije i imena fajla
             File file = fileChooser.showSaveDialog(addButton.getScene().getWindow());
 
+            //spasavanje fajla
             if (file != null) personsModel.saveToXML(file);
-        } else showErrorStage("Završite editovanje kako biste mogli spasiti fajl");
+        } else showErrorStage("Završite editovanje kako biste mogli spasiti fajl"); //prikaz ukoliko se desi greska
     }
 
+    //gasenje aplikacije
     public void exitApp(ActionEvent actionEvent) {
         ((Stage) addButton.getScene().getWindow()).close();
     }
