@@ -22,6 +22,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 public class HomeController {
     //privatni atributi za logicke potrebe kontrolera
@@ -378,7 +379,7 @@ public class HomeController {
             fileChooser.setTitle("Spasi u datoteku datoteku");
 
             //prijedlog naziva fajla
-            fileChooser.setInitialFileName("file-" + LocalDateTime.now() + ".xml");
+            fileChooser.setInitialFileName("file-" + LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) + ".xml");
 
             //dozvoljene ekstenzije
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml"));
