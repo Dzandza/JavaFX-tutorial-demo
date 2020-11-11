@@ -1,3 +1,3 @@
-# Napredniji Tutorijal 7
+# JavaFX-tutorial-demo
 
-Projekat je napravljen u svrhu demonstracije kako se koristi MVC pattern, te kako se manipuliše sa podacima koji se trebaju prikazati u ListView - u i TableView - u. Nadovezan je na tutorijal 7 na predmetu RPR akademske 2019/2020. godine. Demonstrirano je dodavanje, čitanje i editovanje (create, read, update). Brisanje stavki nije urađeno iz prostog razloga jer se nalazi isti zadatak na zadaći 2. Također je urađen primjer importa i exporta u .xml datoteku (funkcionise samo sa formom koju generise XmlEncoder, svako drugo odstupanje od iste može dovesti do nepredviđenog ponašanja programa). Sve detaljnije informacije i objašnjenja su napisani u komentarima u kodu.
+JavaFX app to demonstrate students a simple way to manipulate XML files (automatic and manual parsing) and create a simple UI with fxml.
